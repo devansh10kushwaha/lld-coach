@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>LLD Coach - Problems</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        nav {
+            background: #172033;
+            color: white;
+            padding: 18px 50px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+            margin: 50px auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            margin-bottom: 10px;
+            font-size: 36px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 17px;
+        }
+
+        .problems {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #64748b;
+            line-height: 1.7;
+            min-height: 85px;
+        }
+
+        .difficulty {
+            display: inline-block;
+            background: #e8f1ff;
+            color: #2563eb;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #172033;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #2563eb;
+        }
+
+        .navigation {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        .secondary-button {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #475569;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .secondary-button:hover {
+            background: #334155;
+        }
+
+        @media (max-width: 900px) {
+
+            .problems {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            nav {
+                padding: 18px 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav>
+    LLD Coach
+</nav>
+
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>Choose a Problem</h1>
+
+        <p>
+            Select an LLD problem and start designing your solution.
+        </p>
+
+    </div>
+
+
+    <div class="problems">
+
+        <div class="card"
+             th:each="problem : ${problems}">
+
+            <span class="difficulty"
+                  th:text="${problem.difficulty}">
+                Medium
+            </span>
+
+            <h2 th:text="${problem.title}">
+                Parking Lot
+            </h2>
+
+            <p th:text="${problem.description}">
+                Problem description
+            </p>
+
+            <a class="button"
+               th:href="@{/problems/{problemId}/attempt(problemId=${problem.id})}">
+                Start Attempt
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="navigation">
+
+        <a href="/history"
+           class="secondary-button">
+            View History
+        </a>
+
+        <a href="/"
+           class="secondary-button">
+            Home
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

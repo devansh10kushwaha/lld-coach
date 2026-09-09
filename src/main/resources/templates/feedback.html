@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>LLD Coach - Evaluation Result</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        nav {
+            background: #172033;
+            color: white;
+            padding: 18px 50px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .page-title {
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .score-card {
+            text-align: center;
+        }
+
+        .score {
+            font-size: 64px;
+            font-weight: bold;
+            margin: 20px;
+            color: #172033;
+        }
+
+        .score-label {
+            color: #667085;
+            font-size: 17px;
+        }
+
+        .feedback {
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .strengths {
+            background: #f8fafc;
+            border-left: 5px solid #16a34a;
+        }
+
+        .improvements {
+            background: #f8fafc;
+            border-left: 5px solid #ea580c;
+        }
+
+        .feedback-list {
+            white-space: pre-line;
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary-button {
+            background: #475569;
+        }
+
+        .secondary-button:hover {
+            background: #334155;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav>
+    LLD Coach
+</nav>
+
+
+<div class="container">
+
+    <!-- Evaluation Result -->
+
+    <div class="card score-card">
+
+        <h1 class="page-title">
+            Evaluation Result
+        </h1>
+
+        <div class="score"
+             th:text="${evaluation.score}">
+
+            75
+
+        </div>
+
+        <div class="score-label">
+
+            Score out of 100
+
+        </div>
+
+    </div>
+
+
+    <!-- Overall Feedback -->
+
+    <div class="card">
+
+        <h2>
+            Overall Feedback
+        </h2>
+
+        <p class="feedback"
+           th:text="${evaluation.overallFeedback}">
+
+            Good attempt.
+
+        </p>
+
+    </div>
+
+
+    <!-- Strengths -->
+
+    <div class="card strengths">
+
+        <h2>
+            Strengths
+        </h2>
+
+        <div class="feedback-list"
+             th:text="${evaluation.strengths}">
+
+            Strengths will appear here.
+
+        </div>
+
+    </div>
+
+
+    <!-- Areas to Improve -->
+
+    <div class="card improvements">
+
+        <h2>
+            Areas to Improve
+        </h2>
+
+        <div class="feedback-list"
+             th:text="${evaluation.improvements}">
+
+            Improvements will appear here.
+
+        </div>
+
+    </div>
+
+
+    <!-- Actions -->
+
+    <div class="card">
+
+        <h2>
+            Continue Practicing
+        </h2>
+
+        <p>
+            Review the evaluation and decide whether to retry
+            the same problem or practice another problem.
+        </p>
+
+        <div class="buttons">
+
+            <a class="button"
+               th:href="@{'/problems/' + ${evaluation.submission.attempt.problem.id} + '/attempt'}">
+
+                Try Again
+
+            </a>
+
+
+            <a href="/history"
+               class="button secondary-button">
+
+                View History
+
+            </a>
+
+
+            <a href="/problems"
+               class="button secondary-button">
+
+                Other Problems
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

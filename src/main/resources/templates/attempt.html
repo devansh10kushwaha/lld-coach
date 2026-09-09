@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>LLD Coach - Attempt</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        nav {
+            background: #172033;
+            color: white;
+            padding: 18px 50px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+
+        .difficulty {
+            display: inline-block;
+            background: #e8f1ff;
+            color: #2563eb;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .problem-description {
+            color: #475569;
+            line-height: 1.7;
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 22px;
+            margin-bottom: 8px;
+        }
+
+        .hint {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            display: block;
+            width: 100%;
+            min-height: 150px;
+            padding: 14px;
+            margin: 0;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: white;
+            color: #172033;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: left;
+            direction: ltr;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        textarea::placeholder {
+            color: #94a3b8;
+            opacity: 1;
+            text-align: left;
+        }
+
+        .button-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 22px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary-button {
+            background: #475569;
+        }
+
+        .secondary-button:hover {
+            background: #334155;
+        }
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 18px 25px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .button-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+    LLD Coach
+</nav>
+
+
+<div class="container">
+
+
+    <!-- Page Header -->
+
+    <div class="header">
+
+        <span class="difficulty"
+              th:text="${problem.difficulty}">
+            Medium
+        </span>
+
+        <h1 th:text="${problem.title}">
+            Parking Lot
+        </h1>
+
+    </div>
+
+
+    <!-- Problem Statement -->
+
+    <div class="card">
+
+        <h2>Problem Statement</h2>
+
+        <p class="problem-description"
+           th:text="${problem.description}">
+            Problem description will appear here.
+        </p>
+
+    </div>
+
+
+    <!-- Solution Form -->
+
+    <form method="post"
+          action="/submissions">
+
+
+        <!-- Attempt ID -->
+
+        <input type="hidden"
+               name="attemptId"
+               th:value="${attempt.id}">
+
+
+        <div class="card">
+
+
+            <h2>Your Solution</h2>
+
+
+            <!-- Design Explanation -->
+
+            <label for="designExplanation">
+                1. Design Explanation
+            </label>
+
+            <p class="hint">
+                Explain your classes, responsibilities, relationships,
+                and important design decisions.
+            </p>
+
+            <textarea
+                    id="designExplanation"
+                    name="designExplanation"
+                    required
+                    placeholder="Example: ParkingLot manages parking spots. Vehicle represents different vehicle types. ParkingSpot represents available parking spaces. Explain how these classes interact and why you selected this design."></textarea>
+
+
+            <!-- Diagram -->
+
+            <label for="diagram">
+                2. Class / Relationship Diagram
+            </label>
+
+            <p class="hint">
+                You can describe your diagram using text.
+                Example: ParkingLot -> ParkingSpot -> Vehicle
+            </p>
+
+            <textarea
+                    id="diagram"
+                    name="diagram"
+                    placeholder="Example: ParkingLot -> ParkingSpot -> Vehicle"></textarea>
+
+
+            <!-- Code -->
+
+            <label for="code">
+                3. Code
+            </label>
+
+            <p class="hint">
+                Provide your Java implementation or important
+                class definitions.
+            </p>
+
+            <textarea
+                    id="code"
+                    name="code"
+                    placeholder="Example: class ParkingLot { }&#10;&#10;class ParkingSpot { }&#10;&#10;class Vehicle { }"></textarea>
+
+
+            <!-- Buttons -->
+
+            <div class="button-row">
+
+                <button type="submit"
+                        class="button">
+                    Submit Solution
+                </button>
+
+                <a href="/problems"
+                   class="button secondary-button">
+                    Back to Problems
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+
+</div>
+
+
+</body>
+
+</html>

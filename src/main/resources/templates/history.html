@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>LLD Coach - Attempt History</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        nav {
+            background: #172033;
+            color: white;
+            padding: 18px 50px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .attempt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .attempt-title {
+            margin: 8px 0;
+        }
+
+        .difficulty {
+            display: inline-block;
+            background: #e8f1ff;
+            color: #2563eb;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #dcfce7;
+            color: #166534;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .status-in-progress {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .details {
+            margin-top: 18px;
+            color: #475569;
+            line-height: 2;
+        }
+
+        .score {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 14px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            border-radius: 7px;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .evaluation-unavailable {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 14px;
+            background: #f1f5f9;
+            color: #64748b;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 11px 18px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary-button {
+            background: #475569;
+        }
+
+        .secondary-button:hover {
+            background: #334155;
+        }
+
+        .empty {
+            text-align: center;
+            color: #64748b;
+            padding: 40px;
+        }
+
+        .navigation {
+            margin-top: 25px;
+        }
+
+        @media (max-width: 700px) {
+
+            .attempt-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                padding: 18px 25px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<nav>
+    LLD Coach
+</nav>
+
+
+<div class="container">
+
+
+    <!-- Page Header -->
+
+    <div class="header">
+
+        <h1>Attempt History</h1>
+
+        <p>
+            Review your previous LLD practice attempts,
+            evaluation scores, and feedback.
+        </p>
+
+    </div>
+
+
+    <!-- Empty State -->
+
+    <div th:if="${#lists.isEmpty(attempts)}"
+         class="card empty">
+
+        <h2>No Attempts Yet</h2>
+
+        <p>
+            Start solving an LLD problem to create
+            your first attempt.
+        </p>
+
+        <a href="/problems"
+           class="button">
+            Browse Problems
+        </a>
+
+    </div>
+
+
+    <!-- Attempt List -->
+
+    <div th:each="attempt : ${attempts}"
+         class="card">
+
+
+        <!-- Attempt Header -->
+
+        <div class="attempt-header">
+
+            <div>
+
+                <span class="difficulty"
+                      th:text="${attempt.problem.difficulty}">
+                    Medium
+                </span>
+
+                <h2 class="attempt-title"
+                    th:text="${attempt.problem.title}">
+                    Parking Lot
+                </h2>
+
+            </div>
+
+
+            <!-- Status -->
+
+            <span class="status"
+                  th:classappend="${attempt.status == 'IN_PROGRESS'} ? ' status-in-progress' : ''"
+                  th:text="${attempt.status}">
+                SUBMITTED
+            </span>
+
+        </div>
+
+
+        <!-- Attempt Details -->
+
+        <div class="details">
+
+
+            <div>
+
+                <strong>Attempt ID:</strong>
+
+                <span th:text="${attempt.id}">
+                    1
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>Started:</strong>
+
+                <span th:text="${attempt.startedAt}">
+                    2026-09-10
+                </span>
+
+            </div>
+
+
+            <div th:if="${attempt.submittedAt != null}">
+
+                <strong>Submitted:</strong>
+
+                <span th:text="${attempt.submittedAt}">
+                    2026-09-10
+                </span>
+
+            </div>
+
+
+            <!-- Score Available -->
+
+            <div th:if="${attemptScores.containsKey(attempt.id)}">
+
+                <div class="score">
+
+                    Score:
+
+                    <span th:text="${attemptScores.get(attempt.id) + '/100'}">
+                        90/100
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Evaluation Not Available -->
+
+            <div th:unless="${attemptScores.containsKey(attempt.id)}">
+
+                <div class="evaluation-unavailable">
+
+                    Evaluation not available
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Review Button Only If Evaluation Exists -->
+
+        <a th:if="${attemptScores.containsKey(attempt.id)}"
+           class="button"
+           th:href="@{'/attempts/' + ${attempt.id} + '/review'}">
+
+            Review Attempt
+
+        </a>
+
+
+        <!-- Continue Button For In-Progress Attempt -->
+
+        <a th:if="${attempt.status == 'IN_PROGRESS'}"
+           class="button"
+           th:href="@{'/attempts/' + ${attempt.id}}">
+
+            Continue Attempt
+
+        </a>
+
+
+    </div>
+
+
+    <!-- Navigation -->
+
+    <div class="navigation">
+
+        <a href="/problems"
+           class="button">
+
+            Browse Problems
+
+        </a>
+
+        <a href="/"
+           class="button secondary-button">
+
+            Home
+
+        </a>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
