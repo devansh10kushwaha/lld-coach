@@ -86,4 +86,4 @@ Repositories       Evaluator
                         |
                         v
                     Feedback
-![image alt](https://github.com/devansh10kushwaha/lld-coach/blob/ed25c1dcbd0ae715e33abd390222ab1aa5126626/home.lld.png)
+![image alt](https://github.com/devansh10kushwaha/lld-coach/blob/8c4d26c4ada4eef503c6193d192db218d3a2e905/home.lld.png)
