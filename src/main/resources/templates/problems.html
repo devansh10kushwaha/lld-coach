@@ -96,6 +96,7 @@
             text-decoration: none;
             border-radius: 7px;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .button:hover {
@@ -181,7 +182,7 @@
             </p>
 
             <a class="button"
-               th:href="@{/problems/{problemId}/attempt(problemId=${problem.id})}">
+               th:href="@{'/problems/' + ${problem.id} + '/attempt'}">
                 Start Attempt
             </a>
 
